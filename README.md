@@ -1,13 +1,13 @@
 
 # MVG ePaper display
 
-I learned at GPN23 in [Til Harbaum's talk](https://cfp.gulas.ch/gpn23/talk/CWFRB8/) from the project of building a virtual timetable for the KVV trams. 
+I learned at GPN23 in [Till Harbaum's talk](https://cfp.gulas.ch/gpn23/talk/CWFRB8/) from the project of building a virtual timetable for the KVV trams. 
 But as I don't live in Karlsruhe, I had to adjust it for the MVG API, which includes all of the MVV area. 
-Additionally, I adjusted it for the 4-color version of the ePaper display, so you have an additional yellow to choose from.
+Additionally, I adjusted it for the 4-color version of the ePaper display, so you have an additional yellow to choose from. (Even if I currently do not use yellow)
 
 ![Final setup](doc/mvg_final.jpg)
 
-## differences to Til Harbaum's KVV
+## differences to Till Harbaum's KVV
 
 * Use GxEPD2 instead of Adafruit EPD to use the 4-color version of the display instead of the 3-color one
 * Implement the MVG API instead of the KVV API
@@ -22,7 +22,7 @@ The whole setup is pretty simple and can be wired on a breadboard as depicted.
 
 ![Wiring](doc/mvg.png)
 
-IMPORTANT NOTE: This picture shows the wiring made by the original repository. Connect the Display's D/C with any other pin than D0, for example D6. Then connect a wire (or better, a resistor somewhere in the kΩ range) to D0 and RST of the ESP. D0 is used to wake up the ESP after a set amount of time. This way, it will refresh automatically. If you choose not to connect D0 with RST, you'll need to push the Reset Button to update the display manually. Tip: Bridge those pins only when you're done flashing the ESP8266. Bridging them will make the repeated flashing process more complex, as you will need to press the Reset Button before uploading the file or even unplug and replug the ESP each time you want to flash it.
+IMPORTANT NOTE: This wiring is a little bit different to the original repository. The Display's D/C is connected with D6 instead of D0, but you could use any other free GPIO pin. Then connect a wire (or better, a resistor somewhere in the kΩ range) to D0 and RST of the ESP. D0 is used to wake up the ESP after a set amount of time. This way, it will refresh automatically. If you choose not to connect D0 with RST, you'll need to push the Reset Button to update the display manually. Tip: Bridge those pins only when you're done flashing the ESP8266. Bridging them will make the repeated flashing process more complex, as you will need to press the Reset Button before uploading the file or even unplug and replug the ESP each time you want to flash it.
 
 > Since the epaper display keeps the data even if not powered at all the ESP8266 simply boots up, connects to the (hardcoded) WiFi network, downloads the live data, updates the display and then powers down/goes into deep sleep. The whole setup can thus be run from a battery with the reset button exposed so it can be pushed to boot the ESP8266 and to update the display.
 
@@ -55,7 +55,7 @@ The station ID of the station to be displayed is hardcoded into the sketch. By d
 
 ## The sketch
 
-First and foremost, most of this program is based on [Til Harbaums Repository "KVV"](https://github.com/harbaum/kvv).
+First and foremost, most of this program is based on [Till Harbaums Repository "KVV"](https://github.com/harbaum/kvv).
 The sketch is based on the [BasicHttpsClient.ino](https://github.com/esp8266/Arduino/blob/master/libraries/ESP8266HTTPClient/examples/BasicHttpsClient/BasicHttpsClient.ino) for the ESP8266. The display is driven using the [GxEPD2 library](https://github.com/ZinggJM/GxEPD2). And finally the JSON parsing is done using the [ArduinoJson library](https://github.com/bblanchon/ArduinoJson). All these dependencies can be installed from the library manager within the Arduino IDE.
 
 A custom generated font is being used since the fonts distributed by Adafruit with the Adafruit GFX library only include 7 bit fonts and we need an 8 bit font for the german umlauts used by the MVG.
